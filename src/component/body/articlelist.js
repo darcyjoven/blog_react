@@ -1,5 +1,4 @@
-import { useContext, useReducer } from "react"
-import { ArticleDemo, StoreDemo } from '../../demodata'
+import { useContext,  } from "react" 
 import { Context } from '../../state/context'
 import { ReadAllAction } from '../../state/action'
 // import { ReadAll } from '../../redux/action/actiontype'
@@ -13,7 +12,7 @@ import { ReadAllAction } from '../../state/action'
  */
 function getArticleList() {
     //demo 实例数据
-    return ArticleDemo
+    return null
 }
 
 
@@ -262,6 +261,7 @@ function AticleListItem(props) {
     // const articleList = StoreDemo.article
     const { state:{article:articleList},dispatch } = useContext(Context)
     console.log(articleList)
+    
     return (
         <div id="TopstoryContent" className="Topstory-content">
             <div className="ListShortcut">
