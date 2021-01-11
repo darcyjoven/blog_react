@@ -1,17 +1,17 @@
-import { useContext, useEffect, useReducer, useState } from "react"
+import { useContext, useReducer } from "react"
 import { ArticleDemo, StoreDemo } from '../../demodata'
-// import { Context } from '../../index'
+import { Context } from '../../state/context'
+import { ReadAllAction } from '../../state/action'
 // import { ReadAll } from '../../redux/action/actiontype'
 // import { reducer } from '../../redux/reducer'
 // import { readAllAction } from '../../redux/action'
 
 
 
-
 /**
  * 获取文章列表
  */
-function getArticleList(){
+function getArticleList() {
     //demo 实例数据
     return ArticleDemo
 }
@@ -61,12 +61,14 @@ function ListDescription(props) {
  */
 function ListReadAll(props) {
     // const [state, dispatch] = useReducer(reducer, StoreDemo)
-    // const {dispatch}=useContext(Context)
- 
-    console.log(props.id)
+    const { state, dispatch } = useContext(Context)
+    
+
     return (
         <button type="button" className="Button ContentItem-more Button--plain"
-             >
+            onClick={() => {
+                dispatch(ReadAllAction(props.id))
+            }}>
             阅读全文
             <span style={{ display: "inline-flex", alignItems: "center" }}>
                 <svg className="Zi Zi--ArrowDown ContentItem-arrowIcon" fill="currentColor" viewBox="0 0 24 24" width="24"
@@ -205,7 +207,7 @@ function MoreExt() {
  * 未展开列表
  */
 function NoExpanded(props) {
-    
+
     return (
         <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
             <div className="Feed" data-za-detail-view-path-module="FeedItem">
@@ -228,7 +230,7 @@ function NoExpanded(props) {
                         {/* 文字描述 */}
                         <div className="RichContent-inner">
                             <ListDescription listDescription={{ description: props.thisArticle.description }} />
-                            <ListReadAll id ={props.thisArticle.id} />
+                            <ListReadAll id={props.thisArticle.id} />
                         </div>
                         {/* card下方菜单start */}
                         <div className="ContentItem-actions">
@@ -257,8 +259,9 @@ function AticleListItem(props) {
 
     // const { state:{article:articleList} } = useContext(Context)
     // const [state, dispatch] = useReducer(reducer,StoreDemo)
-    const articleList = StoreDemo.article
-
+    // const articleList = StoreDemo.article
+    const { state:{article:articleList},dispatch } = useContext(Context)
+    console.log(articleList)
     return (
         <div id="TopstoryContent" className="Topstory-content">
             <div className="ListShortcut">
@@ -272,7 +275,9 @@ function AticleListItem(props) {
                                     article.expanded ?
                                         <NoExpanded thisArticle={article} />
                                         :
-                                        <p>阅读全文</p>
+                                        <p onClick={()=>{
+                                            dispatch(ReadAllAction(article.id))
+                                        }}>阅读全文</p>
                                 ))
                         }
                     </div>
