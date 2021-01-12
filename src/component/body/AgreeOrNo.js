@@ -15,7 +15,7 @@ export const Agree = props => {
                                 fill-rule="evenodd">
                             </path>
                         </svg>
-                    </span>赞同 65
+                    </span>赞同 {props.nums}
             </button>
                 <button aria-label="反对" type="button" className="Button VoteButton VoteButton--down">
                     <span style={{ display: "inline-flex", alignItems: "center" }}>

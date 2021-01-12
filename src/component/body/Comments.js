@@ -8,7 +8,7 @@ export const Comments=props=>{
                         fill-rule="evenodd">
                     </path>
                 </svg>
-            </span>{123} 条评论
+            </span>{props.nums} 条评论
         </button>
     )
 }
