@@ -1,5 +1,5 @@
 import { Agree } from './AgreeOrNo'
-import { Comments } from './Comments'
+import { Comments,CommentView } from './Comments'
 import { Share, Collect } from './Share&Collect'
 import { MoreExt } from './MoreExt'
 import { articleText } from '../../demodata'
@@ -28,7 +28,8 @@ export const Expanded = (props) => {
                     <ReleaseTime cdate={props.article.createTime} mdate={props.article.modidyTime} />
                     <ListMenu agrees={props.article.views} comments={props.article.comments} />
                 </div>
-                <p>{/* 下方按钮 */}</p>
+                {/* 这里放评论详情 */}
+                <CommentView/>
             </div>
         </>
     )
@@ -40,10 +41,7 @@ export const Expanded = (props) => {
 export const Noexpanded = props => (
     <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
         <div className="Feed" data-za-detail-view-path-module="FeedItem">
-            <div className="ContentItem ArticleItem"
-                itemProp="article"
-                itemType="http://schema.org/SocialMediaPosting"
-                data-za-detail-view-path-module="PostItem" >
+            <div className="ContentItem ArticleItem" itemProp="article" itemType="http://schema.org/SocialMediaPosting" data-za-detail-view-path-module="PostItem" >
                 {/* 标题 */}
                 <ListTitle title={props.article.title} />
                 {/* 缩略图和文字描述 */}
@@ -56,6 +54,8 @@ export const Noexpanded = props => (
                     <ListMenu agrees={props.article.views} comments={props.article.comments} />
                     {/* card下方菜单end  */}
                 </div>
+                {/* 这里放评论详情 */}
+                <CommentView/>
             </div>
         </div>
     </div>
