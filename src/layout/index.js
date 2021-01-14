@@ -1,10 +1,25 @@
-import { OrderBy } from '../component/body/order'  
+import { OrderBy } from '../component/body/order'
 import { AticleListItem } from '../component/body/articlelist'
 import { HeaderAll } from '../component/header'
 import { RightAll } from '../component/body/right'
+import { BodyAll } from '../component/body'
 
-function Index() { 
-    const orderby=[
+export const Index2 = props => {
+    return (
+        <>
+            {/* header  */}
+            <header role="banner" className="Sticky AppHeader" data-za-module="TopNavBar">
+                <HeaderAll ></HeaderAll>
+            </header>
+            <main role="main" className="App-main">
+                <BodyAll />
+            </main>
+        </>
+    )
+}
+
+function Index() {
+    const orderby = [
         {
             content: "时间",
             link: "#",
@@ -57,7 +72,7 @@ function Index() {
                         </div>
                         {/* 文章列表card end */}
                         {/* 右侧内容start */}
-                        <RightAll/>
+                        <RightAll />
                         {/* 右侧内容end */}
                     </div>
                 </div>

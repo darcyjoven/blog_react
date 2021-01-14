@@ -1,21 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Index } from './layout'
-import { StoreDemo } from './demodata'
+import { Index, Index2 } from './layout'
+import { Provider } from './state/context';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-const Context = React.createContext(StoreDemo)
 
-const Provider = (props) => {
-  const [state,dispatch] = React.useReducer(reducer,)
-  return (
-    <Context.Provider values={ }>
-      {props.children}
-    </Context.Provider>
-  )
-}
 
 ReactDOM.render(
-  <Index />,
+  <BrowserRouter>
+    <Provider>
+      <Switch>
+        <Route path='/1' component={Index}></Route>
+        <Route path='/2' component={Index2}></Route>
+      </Switch> 
+    </Provider>
+  </BrowserRouter> ,
   document.getElementById('root')
 );
 
