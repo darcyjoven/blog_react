@@ -12,8 +12,23 @@ export const Comments = props => {
         </button>
     )
 }
+export const CommentView = (props) => (
+    <div class="Comments-container ZVideoItem-commentContainer">
+        <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
+            {/* 排序和评论数量 */}
+            <CommentOrder />
+            <div>
+                {/* 评论主要内容 */}
+                <CommentAll />
+                {/* 分页 */}
+                <CommentPag />
+            </div>
+        </div>
+    </div>
 
-export const CommentView = props => (
+)
+
+const CommentView2 = props => (
     <div class="Comments-container ZVideoItem-commentContainer">
         <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
             {/* 上面排序 */}
@@ -112,7 +127,9 @@ export const CommentView = props => (
                                     </a>
                                     </span>
                                     {/* 被回复人id */}
-                                    <span class="CommentItemV2-reply">回复</span><span class="UserLink">
+                                    <span class="CommentItemV2-reply">回复
+                                    </span>
+                                    <span class="UserLink">
                                         <a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank"
                                             href="https://www.zhihu.com/people/alt-10-46">小日本煤炉代拍
                                     </a>
@@ -204,14 +221,198 @@ export const CommentView = props => (
                             </div>
                         </div>
                     </div>
-                    
+
                     {/* 提交 */}
                     <button type="button" disabled="" class="Button CommentEditorV2-singleButton Button--primary Button--blue">
                         发布
                     </button>
                 </div>
-                
+
             </div>
+        </div>
+    </div>
+)
+
+const CommentListHead = (props) => (
+    <div class="CommentItemV2-meta">
+        {/* 头像 */}
+        <CommentHeadPic />
+        {/* 评论人ID */}
+        <CommentID />
+        <span class="CommentItemV2-reply">
+            回复
+        </span>
+        {/* 被评论人ID */}
+        <CommentID />
+        {/* 评论时间 */}
+        <CommentTime />
+    </div>
+)
+
+
+/**
+ * 二级评论，列表形式扩展
+ */
+const CommentList = (props) => (
+    <li class="NestComment--child">
+        <div class="CommentItemV2">
+            {/* 头像和回复人id */}
+            <CommentListHead />
+            {/* 回复内容 */}
+            <CommentText/>
+        </div>
+    </li>
+)
+
+
+/**
+ * 一级评论，一个评论房间
+ * @param {*} props 
+ */
+const CommentRoom = (props) => (
+    <li class="NestComment--rootComment">
+        <div class="CommentItemV2">
+            <div>
+                {/* 头像相关 */}
+                <CommentHead />
+                {/* 评论正文 */}
+                <CommentText />
+            </div>
+        </div>
+    </li>
+)
+
+/**
+ * 头像相关
+ * @param {*} props 
+ */
+const CommentHead = (props) => (
+    <div class="CommentItemV2-meta">
+        {/* 头像 */}
+        <CommentHeadPic />
+        {/* 用户名 */}
+        <CommentID />
+        {/* 评论时间 */}
+        <CommentTime />
+    </div>
+)
+
+const CommentTime = (props) => (
+    <span class="CommentItemV2-time">
+        2020-12-12
+    </span>
+)
+const CommentID = (props) => (
+    <span class="UserLink">
+        <a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank"
+            href="https://www.zhihu.com/people/alt-10-46">小日本煤炉代拍
+        </a>
+    </span>
+)
+
+/**
+ * 头像
+ * @param {*} props 
+ */
+const CommentHeadPic = (props) => (
+    <div>
+        <span class="UserLink CommentItemV2-avatar">
+            <div class="Popover">
+                <div id="Popover35-toggle" aria-haspopup="true" aria-expanded="false"
+                    aria-owns="Popover35-content">
+                    <a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" target="_blank"
+                        href="https://www.zhihu.com/people/alt-10-46">
+                        <img class="Avatar UserLink-avatar" width="24" height="24"
+                            src="./(2 封私信 _ 12 条消息) 首页 - 知乎_files/v2-8b14a0e0f7ab8c6029ee62c435eabb51_s.jpg"
+                            srcset="https://pic4.zhimg.com/v2-8b14a0e0f7ab8c6029ee62c435eabb51_xs.jpg?source=06d4cd63 2x"
+                            alt="小日本煤炉代拍" />
+                    </a>
+                </div>
+            </div>
+        </span>
+    </div>
+)
+/**
+ * 评论文字
+ * @param {*} props 
+ */
+const CommentText = (props) => (
+    <div class="CommentItemV2-metaSibling">
+        <div class="CommentRichText CommentItemV2-content">
+            <div class="RichText ztext">
+                日剧 下辈子我再好好过
+                                                <br />
+                                                女主有五个py
+                                            </div>
+            {/* 赞和回复 */}
+            <CommentMenu />
+        </div>
+    </div>
+) 
+
+/**
+ * 一条评论内容
+ * @param {*} props 
+ */
+const CommentItem = (props) => (
+    <ul class="NestComment">
+        <CommentRoom />
+        <CommentList />
+        <CommentList />
+        <CommentReadAll />
+    </ul>
+)
+
+/**
+ * 评论文字
+ * @param {*} props 
+ */
+const CommentAll = (props) => (
+    <div class="CommentListV2">
+        <CommentItem />
+        <CommentItem />
+    </div>
+)
+
+
+
+/**
+ * 分页
+ * @param {*} props 
+ */
+const CommentPag = (props) => (
+    <div class="Pagination CommentsV2-pagination">
+        <button type="button" disabled="" class="Button PaginationButton PaginationButton--current Button--plain">
+            1
+                    </button>
+        <button type="button" class="Button PaginationButton Button--plain">
+            2
+                    </button><button type="button" class="Button PaginationButton PaginationButton-next Button--plain">
+            下一页
+                    </button>
+    </div>
+)
+
+/**
+ * 评论上方的排序
+ * @param {*} props 
+ */
+const CommentOrder = (props) => (
+    <div class="Topbar CommentTopbar">
+        <div class="Topbar-title">
+            <h2 class="CommentTopbar-title">32 条评论</h2>
+        </div>
+        <div class="Topbar-options">
+            <button type="button" class="Button Button--plain Button--withIcon Button--withLabel">
+                <span style={{ display: "inline-flex", alignItems: "center" }}>
+                    <svg class="Zi Zi--Switch Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em">
+                        <path d="M13.004 7V4.232c0-.405.35-.733.781-.733.183 0 .36.06.501.17l6.437 5.033c.331.26.376.722.1 1.033a.803.803 0 0 1-.601.264H2.75a.75.75 0 0 1-.75-.75V7.75A.75.75 0 0 1 2.75 7h10.254zm-1.997 9.999v2.768c0 .405-.35.733-.782.733a.814.814 0 0 1-.5-.17l-6.437-5.034a.702.702 0 0 1-.1-1.032.803.803 0 0 1 .6-.264H21.25a.75.75 0 0 1 .75.75v1.499a.75.75 0 0 1-.75.75H11.007z"
+                            fill-rule="evenodd">
+                        </path>
+                    </svg>
+                </span>
+                    切换为时间排序
+                </button>
         </div>
     </div>
 )
