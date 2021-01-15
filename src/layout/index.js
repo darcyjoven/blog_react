@@ -1,8 +1,16 @@
+/*
+ * @Date: 2021-01-12 09:05:28
+ * @LastEditors: Darcy
+ * @LastEditTime: 2021-01-15 13:03:16
+ * @FilePath: /blog_react_js/src/layout/index.js
+ * @Description: 
+ */
 import { OrderBy } from '../component/body/order'
 import { AticleListItem } from '../component/body/articlelist'
 import { HeaderAll } from '../component/header'
 import { RightAll } from '../component/body/right'
 import { BodyAll } from '../component/body'
+import { articleOrder as orderby } from '../demodata'
 
 export const Index2 = props => {
     return (
@@ -19,23 +27,6 @@ export const Index2 = props => {
 }
 
 function Index() {
-    const orderby = [
-        {
-            content: "时间",
-            link: "#",
-            id: 1,
-        },
-        {
-            content: "阅读人数",
-            link: "#",
-            id: 2,
-        },
-        {
-            content: "评论",
-            link: "#",
-            id: 3,
-        },
-    ]
     // 文章数据demo
     const article = {
         title: "新的树莓派 400：一台藏身于键盘内微型计算机 | Linux 中国",  //主标题

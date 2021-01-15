@@ -1,4 +1,5 @@
 import { FooterInfo } from '../foot'
+import {footerInfo as footer} from '../../demodata'
 /**
  * 回答问题模块组件
  */
@@ -128,14 +129,7 @@ function RightFour() {
     )
 }
 
-function RightAll() {
-    // 页脚信息
-    const footer = {
-        link: "https://beian.miit.gov.cn/",
-        content: "京 ICP 备 1888",
-        id: 1,
-        copyright: " © 2020 demo",
-    }
+function RightAll() { 
 
     return (
         <div className="GlobalSideBar GlobalSideBar--old" data-za-detail-view-path-module="RightSideBar" data-za-extra-module="{}">

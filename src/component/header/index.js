@@ -1,40 +1,18 @@
-
-
+/*
+ * @Date: 2021-01-12 09:05:28
+ * @LastEditors: Darcy
+ * @LastEditTime: 2021-01-15 14:20:22
+ * @FilePath: /blog_react_js/src/component/header/index.js
+ * @Description: 
+ */
+ 
 import { BlogTitle } from './blogtitle'
 import { HeaderMenu } from './menu'
 import { InputSearch } from './inputSearch'
+import { headMenus as menus,blogNmae as blog} from '../../demodata.js'
 
 
-function HeaderAll() {
-    // 菜单数据
-    const menus = [
-        {
-            content: "首页",
-            link: "#",
-            id: 1,
-        },
-        {
-            content: "会员",
-            link: "#",
-            id: 2,
-        },
-        {
-            content: "发现",
-            link: "#",
-            id: 3,
-        },
-        {
-            content: "等你来答",
-            link: "#",
-            id: 4,
-        },
-    ]
-    //blog 数据
-    const blog = {
-        content: "有事情为什么不问问神奇海螺?",
-        link: "http://www.darcyjoven.com",
-        id: 1,
-    }
+function HeaderAll() { 
 
     return (
         <div className="AppHeader-inner css-0">
@@ -42,7 +20,7 @@ function HeaderAll() {
             <BlogTitle blog={blog} />
             {/* 菜单导航 */}
             <ul role="navigation" className="Tabs AppHeader-Tabs css-0">
-                <HeaderMenu menus={menus}></HeaderMenu>
+                <HeaderMenu key ='1' menus={menus}></HeaderMenu>
             </ul>
             {/* 搜索框 */}
             <div className="css-1acwmmj">

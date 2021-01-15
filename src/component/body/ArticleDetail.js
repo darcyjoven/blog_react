@@ -1,9 +1,24 @@
 import { Agree } from './AgreeOrNo'
-import { Comments,CommentView } from './Comments'
+import { Comments, CommentView } from './Comments'
 import { Share, Collect } from './Share&Collect'
 import { MoreExt } from './MoreExt'
 import { articleText } from '../../demodata'
-import  marked  from 'marked' 
+import marked from 'marked'
+import { useContext } from 'react'
+import { Context } from '../../state/context'
+import { ReadAllAction } from '../../state/action'
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+})
+
 
 /**
  * 展开的阅读全文
@@ -24,12 +39,12 @@ export const Expanded = (props) => {
                         alt={props.article.title}>
                         {/* {这是缩略图} */}
                     </img>
-                    <ExpandedText articleid={props.article.id} />
+                    <ExpandedText id={props.article.id} />
                     <ReleaseTime cdate={props.article.createTime} mdate={props.article.modidyTime} />
-                    <ListMenu agrees={props.article.views} comments={props.article.comments} />
+                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} />
                 </div>
                 {/* 这里放评论详情 */}
-                <CommentView/>
+                <CommentView />
             </div>
         </>
     )
@@ -51,11 +66,11 @@ export const Noexpanded = props => (
                     {/* 文字描述 */}
                     <ListText description={props.article.description} />
                     {/* card下方菜单start */}
-                    <ListMenu agrees={props.article.views} comments={props.article.comments} />
+                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} />
                     {/* card下方菜单end  */}
                 </div>
                 {/* 这里放评论详情 */}
-                <CommentView/>
+                <CommentView />
             </div>
         </div>
     </div>
@@ -72,8 +87,39 @@ const ListMenu = props => (
         <Share />
         <Collect />
         <MoreExt />
+        {/* 阅读全文 */}
+        <ListRealAll id={props.id} />
     </div>
 )
+/**
+ * 阅读全文按钮
+ * @param {*} props 
+ */
+const ListRealAll = (props) => {
+    const { dispatch } = useContext(Context)
+    return (
+        <div className="Popover ShareMenu ContentItem-action">
+            <div className="ShareMenu-toggler" id="Popover23-toggle" aria-haspopup="true" aria-expanded="false"
+                aria-owns="Popover23-content">
+                <button type="button" className="Button Button--plain Button--withIcon Button--withLabel"
+                    onClick={() => { 
+                        dispatch(ReadAllAction(props.id))
+                    }}>
+                    <span style={{ display: "inline-flex", alignItems: "center" }}>
+                        <svg className="Zi Zi--Share Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em"
+                            height="1.2em">
+                            <path
+                                d="M2.931 7.89c-1.067.24-1.275 1.669-.318 2.207l5.277 2.908 8.168-4.776c.25-.127.477.198.273.39L9.05 14.66l.927 5.953c.18 1.084 1.593 1.376 2.182.456l9.644-15.242c.584-.892-.212-2.029-1.234-1.796L2.93 7.89z"
+                                fill-rule="evenodd">
+                            </path>
+                        </svg>
+                    </span>
+                阅读全文
+            </button>
+            </div>
+        </div>
+    )
+}
 
 /**
  * 描述和阅读全文
@@ -100,7 +146,7 @@ const ListText = props => (
 )
 /**
  * 不展开的图片
- * @param {*} props 
+ * @param {imgslink:图片的链接} props 
  */
 const LitImg = props => (
     <div className="RichContent-cover">
@@ -116,7 +162,7 @@ const LitImg = props => (
 
 /**
  * 文章标题
- * @param {*} props 
+ * @param { title:标题内容} props 
  */
 const ListTitle = props => (
     <h2 class="ContentItem-title">
@@ -127,11 +173,10 @@ const ListTitle = props => (
 )
 
 
-const HeadPortrait = props => (
-    <p>
-    </p>
-)
-
+/**
+ * 多少人点赞
+ * @param {nums：点赞人数} props 
+ */
 const ExpandedAgree = props => (
     <div class="ArticleItem-extraInfo">
         <span class="Voters">
@@ -142,42 +187,42 @@ const ExpandedAgree = props => (
     </div>
 )
 
-const ExpandedText = props => {
+/**
+ * 展开文章详情，自动mk2HTML,传入文章id
+ * @param {id:number} props 
+ */
+const ExpandedText = props => (
+    <div class="RichContent-inner">
+        {/* 富文本 */}
+        <span class="RichText ztext CopyrightRichText-richText" itemProp="articleBody" dangerouslySetInnerHTML={{ __html: getArticleText(props.id) }}>
+            {/* {texthtml} */}
+        </span>
+    </div>
+)
+
+/**
+ * 获取文章text，并转化成HTML
+ * @param {*} id 
+ */
+function getArticleText(id) {
     let text = ""
     articleText.forEach(article => {
-        (props.articleid !== article.id) && (text = article.text)
-    })
-
-    marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: false,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false
+        (id === article.id) && (text = article.text)
     }) 
-    const texthtml = marked(text)
-
-
-    return (
-        <div class="RichContent-inner">
-            {/* 富文本 */}
-            <span class="RichText ztext CopyrightRichText-richText" itemprop="articleBody" dangerouslySetInnerHTML={{__html: texthtml}}>
-                {/* {texthtml} */}
-            </span>
-        </div>
-    )
+    return marked(text)
 }
 
+/**
+ * 文章发布时间
+ * @param {cdate：创建时间} props 
+ */
 const ReleaseTime = props => {
-    const rdate = props.cdate.getFullYear() + "-" + (props.cdate.getMonth() + 1) + "-" + props.cdate.getDate()
+    // const rdate = props.cdate.getFullYear() + "-" + (props.cdate.getMonth() + 1) + "-" + props.cdate.getDate()
     return (
         <div class="ContentItem-time">
             <a href="#12" target="_blank">
                 <span data-tooltip="发布于 01-10 12:25">
-                    发布于 {rdate}
+                    发布于 {props.cdate}
                 </span>
             </a>
         </div>

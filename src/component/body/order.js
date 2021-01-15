@@ -1,14 +1,14 @@
-import { useState } from "react";
-
-
-// 提供获取排序信息
-function  getOrder(){
-    
-}
+/*
+ * @Date: 2021-01-12 09:05:28
+ * @LastEditors: Darcy
+ * @LastEditTime: 2021-01-15 13:05:36
+ * @FilePath: /blog_react_js/src/component/body/order.js
+ * @Description: 
+ */
+import { useState } from "react"; 
 
 function OrderBy(props) {
-    const [activeId, setActiveId] = useState(1);
-
+    const [activeId, setActiveId] = useState(1); 
     return (
         <nav className="TopstoryTabs Topstory-tabs">
             {

@@ -260,7 +260,7 @@ function AticleListItem(props) {
     // const [state, dispatch] = useReducer(reducer,StoreDemo)
     // const articleList = StoreDemo.article
     const { state:{article:articleList},dispatch } = useContext(Context)
-    console.log(articleList)
+    
     
     return (
         <div id="TopstoryContent" className="Topstory-content">

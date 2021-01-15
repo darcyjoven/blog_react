@@ -1,6 +1,13 @@
+/*
+ * @Date: 2021-01-12 09:05:28
+ * @LastEditors: Darcy
+ * @LastEditTime: 2021-01-15 13:04:49
+ * @FilePath: /blog_react_js/src/component/body/index.js
+ * @Description: 
+ */
 import {RightAll} from './right'
 import {OrderBy} from './order'
-import {orderbyDemo} from '../../demodata'
+import {articleOrder as orderbyDemo} from '../../demodata'
 import {ArticleAll} from './ArticleAll'
 
 export const BodyAll = props => (
