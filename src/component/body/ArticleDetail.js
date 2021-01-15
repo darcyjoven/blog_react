@@ -4,9 +4,10 @@ import { Share, Collect } from './Share&Collect'
 import { MoreExt } from './MoreExt'
 import { articleText } from '../../demodata'
 import marked from 'marked'
-import { useContext } from 'react'
+import { useContext, useReducer } from 'react'
 import { Context } from '../../state/context'
 import { ReadAllAction } from '../../state/action'
+import { reducer } from '../../state/reducer'
 
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -25,6 +26,7 @@ marked.setOptions({
  * 
  */
 export const Expanded = (props) => {
+    const [commentshow, dipatch] = useReducer(reducer, true)
     return (
         <>
             <div class="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabindex="0">
@@ -41,10 +43,10 @@ export const Expanded = (props) => {
                     </img>
                     <ExpandedText id={props.article.id} />
                     <ReleaseTime cdate={props.article.createTime} mdate={props.article.modidyTime} />
-                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} />
+                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} dispatch={dipatch} />
                 </div>
                 {/* 这里放评论详情 */}
-                <CommentView />
+                {commentshow && (<CommentView />)}
             </div>
         </>
     )
@@ -53,28 +55,32 @@ export const Expanded = (props) => {
  * 未展开的文章列表
  * 
  */
-export const Noexpanded = props => (
-    <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
-        <div className="Feed" data-za-detail-view-path-module="FeedItem">
-            <div className="ContentItem ArticleItem" itemProp="article" itemType="http://schema.org/SocialMediaPosting" data-za-detail-view-path-module="PostItem" >
-                {/* 标题 */}
-                <ListTitle title={props.article.title} />
-                {/* 缩略图和文字描述 */}
-                <div className="RichContent is-collapsed">
-                    {/* 缩略图 */}
-                    <LitImg imgslink={props.article.imgs} />
-                    {/* 文字描述 */}
-                    <ListText description={props.article.description} />
-                    {/* card下方菜单start */}
-                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} />
-                    {/* card下方菜单end  */}
+export const Noexpanded = props => {
+    const [commentshow, dipatch] = useReducer(reducer, true)
+
+    return (
+        <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
+            <div className="Feed" data-za-detail-view-path-module="FeedItem">
+                <div className="ContentItem ArticleItem" itemProp="article" itemType="http://schema.org/SocialMediaPosting" data-za-detail-view-path-module="PostItem" >
+                    {/* 标题 */}
+                    <ListTitle title={props.article.title} />
+                    {/* 缩略图和文字描述 */}
+                    <div className="RichContent is-collapsed">
+                        {/* 缩略图 */}
+                        <LitImg imgslink={props.article.imgs} />
+                        {/* 文字描述 */}
+                        <ListText description={props.article.description} />
+                        {/* card下方菜单start */}
+                        <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} dispatch={dipatch}  />
+                        {/* card下方菜单end  */}
+                    </div>
+                    {/* 这里放评论详情 */}
+                    {commentshow && (<CommentView />)}
                 </div>
-                {/* 这里放评论详情 */}
-                <CommentView />
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 /**
  * 
@@ -83,7 +89,7 @@ export const Noexpanded = props => (
 const ListMenu = props => (
     <div className="ContentItem-actions">
         <Agree nums={props.agrees} />
-        <Comments nums={props.comments} />
+        <Comments nums={props.comments} dispatch={props.dispatch} />
         <Share />
         <Collect />
         <MoreExt />
@@ -102,7 +108,7 @@ const ListRealAll = (props) => {
             <div className="ShareMenu-toggler" id="Popover23-toggle" aria-haspopup="true" aria-expanded="false"
                 aria-owns="Popover23-content">
                 <button type="button" className="Button Button--plain Button--withIcon Button--withLabel"
-                    onClick={() => { 
+                    onClick={() => {
                         dispatch(ReadAllAction(props.id))
                     }}>
                     <span style={{ display: "inline-flex", alignItems: "center" }}>
@@ -208,7 +214,7 @@ function getArticleText(id) {
     let text = ""
     articleText.forEach(article => {
         (id === article.id) && (text = article.text)
-    }) 
+    })
     return marked(text)
 }
 

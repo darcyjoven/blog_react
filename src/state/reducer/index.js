@@ -1,11 +1,11 @@
 /*
  * @Date: 2021-01-12 09:05:28
  * @LastEditors: Darcy
- * @LastEditTime: 2021-01-15 14:22:52
+ * @LastEditTime: 2021-01-15 18:21:38
  * @FilePath: /blog_react_js/src/state/reducer/index.js
  * @Description: 
  */
-import { ReallAll } from '../action/actiontype'
+import { ReallAll,CommentShow } from '../action/actiontype'
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -17,6 +17,8 @@ export const reducer = (state, action) => {
                 }
             }
             return newstate
+        case CommentShow:
+            return !state 
         default:
             return state
     }

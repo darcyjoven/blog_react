@@ -1,6 +1,9 @@
+import {CommentShowAction} from '../../state/action'
+
 export const Comments = props => {
     return (
-        <button type="button" className="Button ContentItem-action Button--plain Button--withIcon Button--withLabel">
+        <button type="button" className="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"
+        onClick={()=>props.dispatch(CommentShowAction())}>
             <span style={{ display: "inline-flex", alignItems: "center" }}>
                 <svg className="Zi Zi--Comment Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em">
                     <path
