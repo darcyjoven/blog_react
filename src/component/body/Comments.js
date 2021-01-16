@@ -1,9 +1,12 @@
-import {CommentShowAction} from '../../state/action'
+import { useReducer } from 'react'
+import { CommentShowAction } from '../../state/action'
+import { commentRoom } from '../../demodata'
+import { reducer } from '../../state/reducer'
 
 export const Comments = props => {
     return (
         <button type="button" className="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"
-        onClick={()=>props.dispatch(CommentShowAction())}>
+            onClick={() => props.dispatch(CommentShowAction())}>
             <span style={{ display: "inline-flex", alignItems: "center" }}>
                 <svg className="Zi Zi--Comment Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em">
                     <path
@@ -15,24 +18,55 @@ export const Comments = props => {
         </button>
     )
 }
-export const CommentView = (props) => (
-    <div class="Comments-container ZVideoItem-commentContainer">
-        <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
-            {/* 排序和评论数量 */}
-            <CommentOrder />
-            <div>
-                {/* 评论主要内容 */}
-                <CommentAll />
-                {/* 分页 */}
-                <CommentPag />
+/**
+ * 
+ * @param {*} props
+ * @param {} props.nums 评论数量
+ * @param {} props.articleid 文章id
+ */
+export const CommentView = (props) => {
+    const [state, dispatch] = useReducer(reducer, getPage(props.articleid))
+    return (
+        <div class="Comments-container ZVideoItem-commentContainer">
+            <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
+                {/* 排序和评论数量 */}
+                <CommentOrder nums={props.nums} />
+                <div>
+                    {/* 评论主要内容 */}
+                    <CommentAll articleid={props.articleid} />
+                    {/* 分页 */}
+                    <CommentPag dispatch={dispatch} countPages={state.countPages} currentPage={state.currentPage} />
+                </div>
+                {/* 输入评论 */}
+                <CommentInput />
             </div>
-            {/* 输入评论 */}
-            <CommentInput/>
         </div>
-    </div>
+    )
+}
 
-)
+function getPage(articleid) {
 
+    const nums = commentRoom.map(
+        item => (
+            (item.articleid === articleid) && (
+                item.comments.map(item => (
+                    (item.super === 0) && (item)
+                )
+                )
+            )
+        )
+    ).length
+
+    return {
+        currentPage: 1,
+        countPages: nums / 3 + 1,// 分页数量
+    }
+}
+
+/**
+ * 标签输入
+ * @param {*} props 
+ */
 const InputEmoji = (props) => (
     <div class="CommentEditorV2-inputUpload">
         <div class="CommentEditorV2-popoverWrap">
@@ -236,6 +270,7 @@ const CommentText = (props) => (
 /**
  * 一条评论内容
  * @param {*} props 
+ * @param {*} props.rommid  主要评论id 
  */
 const CommentItem = (props) => (
     <ul class="NestComment">
@@ -249,13 +284,17 @@ const CommentItem = (props) => (
 /**
  * 评论文字
  * @param {*} props 
+ * @param {*} props 
  */
-const CommentAll = (props) => (
-    <div class="CommentListV2">
-        <CommentItem />
-        <CommentItem />
-    </div>
-)
+const CommentAll = (props) => {
+
+    return (
+        <div class="CommentListV2">
+            <CommentItem />
+            <CommentItem />
+        </div>
+    )
+}
 
 
 /**
@@ -273,24 +312,39 @@ const CommentReadAll = (props) => (
 
 /**
  * 分页
- * @param {*} props 
+ * @param {*} props  
+ * @param {*} props.dispatch      更新页数函数 
+ * @param {*} props.countPages    总页码
+ * @param {*} props.currentPage   当前页数  
  */
 const CommentPag = (props) => (
     <div class="Pagination CommentsV2-pagination">
-        <button type="button" disabled="" class="Button PaginationButton PaginationButton--current Button--plain">
+
+        {[...Array(props.countPages)].map((item,index) => (
+            <button type="button" disabled="" class={"Button PaginationButton Button--plain"+"PaginationButton--current" } >
+               index++
+            </button>
+        ))
+        }
+
+        <button type="button" disabled="" class="Button PaginationButton  Button--plain">
             1
-                    </button>
+        </button>
         <button type="button" class="Button PaginationButton Button--plain">
             2
-                    </button><button type="button" class="Button PaginationButton PaginationButton-next Button--plain">
+        </button>
+        <button type="button" class="Button PaginationButton PaginationButton-next Button--plain">
             下一页
-                    </button>
+        </button>
     </div>
 )
+
+
 
 /**
  * 评论上方的排序
  * @param {*} props 
+ * @param {*} props.nums    评论数量 
  */
 const CommentOrder = (props) => (
     <div class="Topbar CommentTopbar">

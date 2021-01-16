@@ -22,61 +22,44 @@ marked.setOptions({
 
 
 /**
- * 展开的阅读全文
  * 
+ * @param {*} props 
+ * @param {*} props.article     文章数据
  */
-export const Expanded = (props) => {
-    const [commentshow, dipatch] = useReducer(reducer, true)
-    return (
-        <>
-            <div class="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabindex="0">
-                <ListTitle title={props.article.title} />
-                <div class="ContentItem-meta">
-                    {/* {这是头像} */}
-                </div>
-                <div class="RichContent">
-                    <ExpandedAgree nums={props.article.agrees} />
-                    <img class="ArticleItem-image"
-                        src={props.article.imgs}
-                        alt={props.article.title}>
-                        {/* {这是缩略图} */}
-                    </img>
-                    <ExpandedText id={props.article.id} />
-                    <ReleaseTime cdate={props.article.createTime} mdate={props.article.modidyTime} />
-                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} dispatch={dipatch} />
-                </div>
-                {/* 这里放评论详情 */}
-                {commentshow && (<CommentView />)}
-            </div>
-        </>
-    )
-}
-/**
- * 未展开的文章列表
- * 
- */
-export const Noexpanded = props => {
+export const ArticleItem = (props) => {
+
     const [commentshow, dipatch] = useReducer(reducer, true)
 
     return (
         <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
             <div className="Feed" data-za-detail-view-path-module="FeedItem">
-                <div className="ContentItem ArticleItem" itemProp="article" itemType="http://schema.org/SocialMediaPosting" data-za-detail-view-path-module="PostItem" >
-                    {/* 标题 */}
-                    <ListTitle title={props.article.title} />
-                    {/* 缩略图和文字描述 */}
-                    <div className="RichContent is-collapsed">
-                        {/* 缩略图 */}
-                        <LitImg imgslink={props.article.imgs} />
-                        {/* 文字描述 */}
-                        <ListText description={props.article.description} />
-                        {/* card下方菜单start */}
-                        <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.comments} dispatch={dipatch}  />
-                        {/* card下方菜单end  */}
-                    </div>
-                    {/* 这里放评论详情 */}
-                    {commentshow && (<CommentView />)}
-                </div>
+                {/* 标题 */}
+                <ListTitle title={props.article.title} />
+                {/* 缩略图和文字描述 */}
+                <div className={"RichContent" + !props.article.expanded ? "is-collapsed" : ""}>
+                    {props.article.expanded && (<ExpandedAgree nums={props.article.agrees} />)}
+                    {/* 缩略图 */}
+                    {props.article.expanded ?
+                        (
+                            <img class="ArticleItem-image"
+                                src={props.article.imgs}
+                                alt={props.article.title}>
+                                {/* {这是缩略图} */}
+                            </img>)
+                        : (
+                            <LitImg imgslink={props.article.imgs} />
+                        )
+                    } 
+                    {/* 文字描述 */}
+                    {props.article.expanded?(<ExpandedText id={props.article.id} />):(<ListText description={props.article.description} />)}
+                    {props.article.expanded && (<ReleaseTime cdate={props.article.createTime} mdate={props.article.modidyTime} />)}
+                    
+                    {/* card下方菜单start */}
+                    <ListMenu id={props.article.id} agrees={props.article.views} comments={props.article.id} dispatch={dipatch} />
+                    {/* card下方菜单end  */}
+                </div> 
+                {/* 这里放评论详情 */}
+                {commentshow && (<CommentView article={props.article.id} nums ={props.article.id} />)}
             </div>
         </div>
     )
