@@ -326,7 +326,10 @@ const CommentPag = (props) => (
     <div class="Pagination CommentsV2-pagination"> 
 
         {[...Array(props.countPages)].map((item, index) => (
-            <button type="button" disabled="" class={"Button PaginationButton Button--plain" + (index + 1 === props.currentPage ? "PaginationButton--current" : "")} >
+            <button type="button" disabled="" class={"Button PaginationButton Button--plain" + (index + 1 === props.currentPage ? "PaginationButton--current" : "")} 
+            onClick = {()=>{ 
+                props.dispatch(NextPageAction(index))
+            }}>
                 {++index}
             </button>
         ))

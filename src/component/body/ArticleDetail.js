@@ -2,7 +2,7 @@ import { Agree } from './AgreeOrNo'
 import { Comments, CommentView } from './Comments'
 import { Share, Collect } from './Share&Collect'
 import { MoreExt } from './MoreExt'
-import { articleText } from '../../demodata'
+import { articleText,commentRoom } from '../../demodata'
 import marked from 'marked'
 import { useContext, useReducer } from 'react'
 import { Context } from '../../state/context'
@@ -20,6 +20,28 @@ marked.setOptions({
     smartypants: false
 })
 
+function getItemDemo(id){
+    let fornums = 0
+    commentRoom.forEach(
+        (item) => {
+            (item.articleid === id) && (
+                item.comments.forEach(
+                    comment => {
+                        (comment.super === 0) && (
+                            fornums++
+                        )
+                    }
+                )
+            )
+        }
+    ) 
+
+    return {
+        commentshow:true,
+        currentPage: 1,
+        countPages: parseInt(fornums / 3) + 1,// 分页数量
+    }
+}
 
 /**
  * 
@@ -28,7 +50,7 @@ marked.setOptions({
  */
 export const ArticleItem = (props) => {
 
-    const [commentshow, dipatch] = useReducer(reducer, true)
+    const [demoState, dipatch] = useReducer(reducer,getItemDemo(props.article.id))
 
     return (
         <div className="Card TopstoryItem TopstoryItem--old TopstoryItem-isRecommend" tabIndex={0}>
@@ -59,7 +81,7 @@ export const ArticleItem = (props) => {
                     {/* card下方菜单end  */}
                 </div> 
                 {/* 这里放评论详情 */}
-                {commentshow && (<CommentView articleid={props.article.id} nums ={props.article.id} dispatch={dipatch} />)}
+                {demoState.commentshow && (<CommentView articleid={props.article.id} nums ={props.article.id} dispatch={dipatch} />)}
             </div>
         </div>
     )
