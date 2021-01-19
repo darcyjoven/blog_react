@@ -1,11 +1,11 @@
 /*
  * @Date: 2021-01-12 09:05:28
  * @LastEditors: Darcy
- * @LastEditTime: 2021-01-15 18:20:38
+ * @LastEditTime: 2021-01-19 12:30:26
  * @FilePath: /blog_react_js/src/state/action/index.js
  * @Description: 
  */
-import { ReallAll,CommentShow } from './actiontype'
+import { ReallAll,CommentShow,NextPage } from './actiontype'
 /**
  * 阅读全文
  * @param   id 
@@ -22,3 +22,9 @@ export const CommentShowAction = () => {
         type: CommentShow
     } 
 }
+export const NextPageAction = page =>(
+    {
+        type:NextPage,
+        page:page,
+    }
+)

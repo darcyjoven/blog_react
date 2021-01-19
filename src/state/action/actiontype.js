@@ -1,8 +1,8 @@
 /*
  * @Date: 2021-01-12 09:05:28
  * @LastEditors: Darcy
- * @LastEditTime: 2021-01-15 18:17:32
+ * @LastEditTime: 2021-01-19 12:17:26
  * @FilePath: /blog_react_js/src/state/action/actiontype.js
  * @Description: 
  */
-export const [ReallAll,CommentShow]=["阅读全文","显示评论"] 
+export const [ReallAll,CommentShow,NextPage]=["阅读全文","显示评论","翻页"] 

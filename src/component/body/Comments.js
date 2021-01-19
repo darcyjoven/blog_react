@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { CommentShowAction } from '../../state/action'
+import { CommentShowAction, NextPageAction } from '../../state/action'
 import { commentRoom } from '../../demodata'
 import { reducer } from '../../state/reducer'
 
@@ -25,7 +25,7 @@ export const Comments = props => {
  * @param {} props.articleid 文章id
  */
 export const CommentView = (props) => {
-    const [state, dispatch] = useReducer(reducer, getPage(props.articleid))
+    const [state, dispatch] = useReducer(reducer, getPage(props.articleid)) 
     return (
         <div class="Comments-container ZVideoItem-commentContainer">
             <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
@@ -36,6 +36,7 @@ export const CommentView = (props) => {
                     <CommentAll articleid={props.articleid} />
                     {/* 分页 */}
                     <CommentPag dispatch={dispatch} countPages={state.countPages} currentPage={state.currentPage} />
+                    
                 </div>
                 {/* 输入评论 */}
                 <CommentInput />
@@ -46,20 +47,24 @@ export const CommentView = (props) => {
 
 function getPage(articleid) {
 
-    const nums = commentRoom.map(
-        item => (
+    let fornums = 0
+    commentRoom.forEach(
+        (item) => {
             (item.articleid === articleid) && (
-                item.comments.map(item => (
-                    (item.super === 0) && (item)
-                )
+                item.comments.forEach(
+                    comment => {
+                        (comment.super === 0) && (
+                            fornums++
+                        )
+                    }
                 )
             )
-        )
-    ).length
+        }
+    ) 
 
     return {
         currentPage: 1,
-        countPages: nums / 3 + 1,// 分页数量
+        countPages: parseInt(fornums / 3) + 1,// 分页数量
     }
 }
 
@@ -318,25 +323,21 @@ const CommentReadAll = (props) => (
  * @param {*} props.currentPage   当前页数  
  */
 const CommentPag = (props) => (
-    <div class="Pagination CommentsV2-pagination">
+    <div class="Pagination CommentsV2-pagination"> 
 
-        {[...Array(props.countPages)].map((item,index) => (
-            <button type="button" disabled="" class={"Button PaginationButton Button--plain"+"PaginationButton--current" } >
-               index++
+        {[...Array(props.countPages)].map((item, index) => (
+            <button type="button" disabled="" class={"Button PaginationButton Button--plain" + (index + 1 === props.currentPage ? "PaginationButton--current" : "")} >
+                {++index}
             </button>
         ))
         }
-
-        <button type="button" disabled="" class="Button PaginationButton  Button--plain">
-            1
-        </button>
-        <button type="button" class="Button PaginationButton Button--plain">
-            2
-        </button>
-        <button type="button" class="Button PaginationButton PaginationButton-next Button--plain">
+        <button type="button" class="Button PaginationButton PaginationButton-next Button--plain"
+        onClick = {()=>{ 
+            props.dispatch(NextPageAction(props.currentPage+1))
+        }}>
             下一页
         </button>
-    </div>
+    </div >
 )
 
 

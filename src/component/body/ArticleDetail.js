@@ -59,7 +59,7 @@ export const ArticleItem = (props) => {
                     {/* card下方菜单end  */}
                 </div> 
                 {/* 这里放评论详情 */}
-                {commentshow && (<CommentView article={props.article.id} nums ={props.article.id} />)}
+                {commentshow && (<CommentView articleid={props.article.id} nums ={props.article.id} dispatch={dipatch} />)}
             </div>
         </div>
     )
