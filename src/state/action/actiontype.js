@@ -5,4 +5,4 @@
  * @FilePath: /blog_react_js/src/state/action/actiontype.js
  * @Description: 
  */
-export const [ReallAll,CommentShow,NextPage]=["阅读全文","显示评论","翻页"] 
+export const [ReallAll,CommentShow,NextPage,CommentReadAll]=["阅读全文","显示评论","翻页","展开全部评论"] 

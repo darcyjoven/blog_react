@@ -1,11 +1,11 @@
 /*
  * @Date: 2021-01-12 09:05:28
  * @LastEditors: Darcy
- * @LastEditTime: 2021-01-19 13:04:21
+ * @LastEditTime: 2021-01-21 12:12:52
  * @FilePath: /blog_react_js/src/state/reducer/index.js
  * @Description: 
  */
-import { ReallAll,CommentShow,NextPage } from '../action/actiontype'
+import { ReallAll,CommentShow,NextPage,CommentReadAll } from '../action/actiontype'
 
 export const reducer = (state, action) => {
     let newstate = JSON.parse(JSON.stringify(state))
@@ -20,10 +20,13 @@ export const reducer = (state, action) => {
         case CommentShow:
             newstate.commentshow=!newstate.commentshow  
             break
-        case NextPage:  
+            case NextPage:  
             // console.log("cliked and this currentPage is "+action.page);
             (action.page <= newstate.countPages)&&(newstate.currentPage = action.page);
             // console.log("cliked after  "+JSON.stringify(newstate));
+            break
+        case CommentReadAll:
+            newstate=!newstate  
             break
         default:
             break

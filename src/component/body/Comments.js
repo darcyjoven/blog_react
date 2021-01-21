@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { CommentShowAction, NextPageAction } from '../../state/action'
+import { CommentShowAction, NextPageAction,CommentReadAllAction } from '../../state/action'
 import { commentRoom } from '../../demodata'
 import { reducer } from '../../state/reducer'
 
@@ -25,7 +25,7 @@ export const Comments = props => {
  * @param {} props.articleid 文章id
  */
 export const CommentView = (props) => {
-    const [state, dispatch] = useReducer(reducer, getPage(props.articleid)) 
+    const [state, dispatch] = useReducer(reducer, getPage(props.articleid))
     return (
         <div class="Comments-container ZVideoItem-commentContainer">
             <div class="CommentsV2 CommentsV2--withEditor CommentsV2-withPagination ZVideoItem-comment">
@@ -33,10 +33,10 @@ export const CommentView = (props) => {
                 <CommentOrder nums={props.nums} />
                 <div>
                     {/* 评论主要内容 */}
-                    <CommentAll articleid={props.articleid} />
+                    <CommentAll articleid={props.articleid} countPages={state.countPages} currentPage={state.currentPage} />
                     {/* 分页 */}
                     <CommentPag dispatch={dispatch} countPages={state.countPages} currentPage={state.currentPage} />
-                    
+
                 </div>
                 {/* 输入评论 */}
                 <CommentInput />
@@ -60,7 +60,7 @@ function getPage(articleid) {
                 )
             )
         }
-    ) 
+    )
 
     return {
         currentPage: 1,
@@ -152,18 +152,23 @@ const CommentInput = (props) => (
 /**
  * 评论head
  * @param {*} props 
+ * @param {*} props.headimg
+ * @param {*} props.nameid
+ * @param {*} props.email
+ * @param {*} props.time
+ * @param {*} props.supernameid
  */
 const CommentListHead = (props) => (
     <div class="CommentItemV2-meta">
         {/* 头像 */}
-        <CommentHeadPic />
+        <CommentHeadPic imglink={props.headimg} name={props.nameid} link={props.email} />
         {/* 评论人ID */}
-        <CommentID />
+        <CommentID name={props.nameid} link={props.email}/>
         <span class="CommentItemV2-reply">
             回复
         </span>
         {/* 被评论人ID */}
-        <CommentID />
+        <CommentID name={props.nameid} link={props.email}/>
         {/* 评论时间 */}
         <CommentTime />
     </div>
@@ -172,14 +177,21 @@ const CommentListHead = (props) => (
 
 /**
  * 二级评论，列表形式扩展
+ * @param {*} props  
+ * @param {*} props.email
+ * @param {*} props.head
+ * @param {*} props.text
+ * @param {*} props.time
+ * @param {*} props.like
+ * @param {*} props.supernameid
  */
 const CommentList = (props) => (
     <li class="NestComment--child">
         <div class="CommentItemV2">
             {/* 头像和回复人id */}
-            <CommentListHead />
+            <CommentListHead headimg={props.head} nameid={props.email} email={props.email} time={props.time} supernameid ={props.supernameid} />
             {/* 回复内容 */}
-            <CommentText />
+            <CommentText nums={props.like} text={props.text} />
         </div>
     </li>
 )
@@ -187,16 +199,21 @@ const CommentList = (props) => (
 
 /**
  * 一级评论，一个评论房间
- * @param {*} props 
+ * @param {*} props  
+ * @param {*} props.email
+ * @param {*} props.head
+ * @param {*} props.text
+ * @param {*} props.time
+ * @param {*} props.like 
  */
 const CommentRoom = (props) => (
     <li class="NestComment--rootComment">
         <div class="CommentItemV2">
             <div>
                 {/* 头像相关 */}
-                <CommentHead />
+                <CommentHead headimg={props.head} nameid={props.email} email={props.email} time={props.time} />
                 {/* 评论正文 */}
-                <CommentText />
+                <CommentText nums={props.like} text={props.text} />
             </div>
         </div>
     </li>
@@ -205,29 +222,44 @@ const CommentRoom = (props) => (
 /**
  * 头像相关
  * @param {*} props 
+ * @param {*} props.headimg
+ * @param {*} props.nameid
+ * @param {*} props.email
+ * @param {*} props.time
  */
 const CommentHead = (props) => (
     <div class="CommentItemV2-meta">
         {/* 头像 */}
         <div>
-            <CommentHeadPic />
+            <CommentHeadPic imglink={props.headimg} name={props.nameid} link={props.email} />
             {/* 用户名 */}
-            <CommentID />
+            <CommentID name={props.nameid} link={props.email} />
         </div>
         {/* 评论时间 */}
-        <CommentTime />
+        <CommentTime time={props.time} />
     </div>
 )
 
+/**
+ * 
+ * @param {*} props 
+ * @param {*} props.time    评论时间 
+ */
 const CommentTime = (props) => (
     <span class="CommentItemV2-time">
-        2020-12-12
+        {props.time}
     </span>
 )
+/**
+ * 
+ * @param {*} props 
+ * @param {*} props.name    用户id
+ * @param {*} props.link    用户主页
+ */
 const CommentID = (props) => (
     <span class="UserLink">
         <a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank"
-            href="https://www.zhihu.com/people/alt-10-46">小日本煤炉代拍
+            href={props.link}>{props.name}
         </a>
     </span>
 )
@@ -235,6 +267,9 @@ const CommentID = (props) => (
 /**
  * 头像
  * @param {*} props 
+ * @param {*} props.imglink 头像链接
+ * @param {*} props.name    用户id
+ * @param {*} props.link    用户链接
  */
 const CommentHeadPic = (props) => (
 
@@ -243,11 +278,11 @@ const CommentHeadPic = (props) => (
             <div id="Popover35-toggle" aria-haspopup="true" aria-expanded="false"
                 aria-owns="Popover35-content">
                 <a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" target="_blank"
-                    href="https://www.zhihu.com/people/alt-10-46">
+                    href={props.link}>
                     <img class="Avatar UserLink-avatar" width="24" height="24"
-                        src="../../../public/v2-8b14a0e0f7ab8c6029ee62c435eabb51_s.jpg"
-                        srcset="https://pic4.zhimg.com/v2-8b14a0e0f7ab8c6029ee62c435eabb51_xs.jpg?source=06d4cd63 2x"
-                        alt="小日本煤炉代拍" />
+                        src={props.imglink}
+                        srcset={props.imglink}
+                        alt={props.name} />
                 </a>
             </div>
         </div>
@@ -257,17 +292,17 @@ const CommentHeadPic = (props) => (
 /**
  * 评论文字
  * @param {*} props 
+ * @param {*} props.text    评论富文本 
+ * @param {*} props.nums    点赞数量
  */
 const CommentText = (props) => (
     <div class="CommentItemV2-metaSibling">
         <div class="CommentRichText CommentItemV2-content">
             <div class="RichText ztext">
-                日剧 下辈子我再好好过
-                                                <br />
-                                                女主有五个py
-                                            </div>
+                {props.text}
+            </div>
             {/* 赞和回复 */}
-            <CommentMenu />
+            <CommentMenu nums={props.nums} />
         </div>
     </div>
 )
@@ -275,41 +310,100 @@ const CommentText = (props) => (
 /**
  * 一条评论内容
  * @param {*} props 
- * @param {*} props.rommid  主要评论id 
+ * @param {*} props.room 整个评论 
  */
-const CommentItem = (props) => (
-    <ul class="NestComment">
-        <CommentRoom />
-        <CommentList />
-        <CommentList />
-        <CommentReadAll />
-    </ul>
-)
+const CommentItem = (props) => {
+    const [showAll2Com, dispatch] = useReducer(reducer, false)
+
+    const lenNoShow = !showAll2Com && props.room.children.length > 3 ? props.room.children.length - 3 : 0
+    // console.log("未展开 is " + lenNoShow)
+    // 生成二级目录
+    // props.room.children.map(
+    //     (item, index) => (
+    //         showAll2Com ? <CommentList key={index} /> : (index < 2) && (<CommentList key={index} />)
+    //     )
+    // )
+    console.log("room show is \n\n")
+    console.log(JSON.parse(JSON.stringify(props.room)))
+
+
+
+    return (
+        <ul class="NestComment">
+            <CommentRoom email={props.room.email} head={props.room.head} text={props.room.text} time={props.room.time} like={props.room.like} />
+            {
+                props.room.children.map(
+                    (item, index) => (
+                        showAll2Com ? <CommentList key={index} email={item.email} head={item.head} text={item.text} time={item.time} like={item.like} supernameid={props.room.email}/>
+                            :
+                            (index < 2) && (<CommentList key={index} email={item.email} head={item.head} text={item.text} time={item.time} like={item.like} supernameid={props.room.email}/>)
+                    )
+                )
+            }
+            {lenNoShow > 0 && <CommentReadAll nums={lenNoShow} dispatch={dispatch} />}
+        </ul>
+    )
+}
 
 /**
  * 评论文字
  * @param {*} props 
- * @param {*} props 
+ * @param {*} props.countPages    总页码
+ * @param {*} props.currentPage   当前页数  
+ * @param {*} props.articleid     id
  */
 const CommentAll = (props) => {
 
+    const CommentRooms = getCurrentComment(props.currentPage, props.articleid)
+    //  romm 是所有的一级评论 
     return (
-        <div class="CommentListV2">
-            <CommentItem />
-            <CommentItem />
-        </div>
+        CommentRooms.rooms.map((item) => (
+            <CommentItem key={item.id} room={item} />
+        ))
     )
+}
+
+function getCurrentComment(currentPage, id) {
+    
+    
+    let romm = []
+    for (let i = 0; i < commentRoom.length; i++) {
+        if (commentRoom[i].articleid === id) {
+            
+            console.log("comments show is \n\n")
+            console.log(JSON.parse(JSON.stringify(commentRoom[i].comments)))
+            romm = commentRoom[i].comments
+                .filter(item => (item.super === 0))
+                .sort((a, b) => (a.id - b.id))
+                .slice((currentPage - 1) * 3, (currentPage) * 3)
+        }
+    }
+
+    console.log("romm show is \n\n")
+    console.log(JSON.parse(JSON.stringify(romm)))
+
+    return {
+        rooms: romm
+    }
 }
 
 
 /**
  * 全部回复
  * @param {*} props 
+ * @param {*} props.nums    剩余未显示评论数量 
+ * @param {*} props.dispatch 展开的函数
  */
 const CommentReadAll = (props) => (
     <div>
         {/* 展开所有评论 */}
-        <div class="CommentMoreReplyButton"><button type="button" class="Button Button--plain">查看全部 6 条回复</button>
+        <div class="CommentMoreReplyButton">
+            <button type="button" class="Button Button--plain" 
+                onClick={()=>(
+                    props.dispatch(CommentReadAllAction())
+                )}>
+                查看全部 {props.nums} 条回复
+            </button>
         </div>
     </div>
 )
@@ -323,21 +417,21 @@ const CommentReadAll = (props) => (
  * @param {*} props.currentPage   当前页数  
  */
 const CommentPag = (props) => (
-    <div class="Pagination CommentsV2-pagination"> 
+    <div class="Pagination CommentsV2-pagination">
 
         {[...Array(props.countPages)].map((item, index) => (
-            <button type="button" disabled="" class={"Button PaginationButton Button--plain" + (index + 1 === props.currentPage ? "PaginationButton--current" : "")} 
-            onClick = {()=>{ 
-                props.dispatch(NextPageAction(index))
-            }}>
+            <button type="button" disabled="" class={"Button PaginationButton Button--plain" + (index + 1 === props.currentPage ? "PaginationButton--current" : "")}
+                onClick={() => {
+                    props.dispatch(NextPageAction(index))
+                }}>
                 {++index}
             </button>
         ))
         }
         <button type="button" class="Button PaginationButton PaginationButton-next Button--plain"
-        onClick = {()=>{ 
-            props.dispatch(NextPageAction(props.currentPage+1))
-        }}>
+            onClick={() => {
+                props.dispatch(NextPageAction(props.currentPage + 1))
+            }}>
             下一页
         </button>
     </div >
@@ -353,7 +447,7 @@ const CommentPag = (props) => (
 const CommentOrder = (props) => (
     <div class="Topbar CommentTopbar">
         <div class="Topbar-title">
-            <h2 class="CommentTopbar-title">32 条评论</h2>
+            <h2 class="CommentTopbar-title">{props.nums} 条评论</h2>
         </div>
         <div class="Topbar-options">
             <button type="button" class="Button Button--plain Button--withIcon Button--withLabel">
@@ -373,6 +467,7 @@ const CommentOrder = (props) => (
 /**
  * 评论下方菜单
  * @param {*} props
+ * @param {*} props.nums    赞的数量
  */
 const CommentMenu = props => (
     <div class="CommentItemV2-footer">
@@ -387,7 +482,7 @@ const CommentMenu = props => (
                     </path>
                 </svg>
             </span>
-            7
+            {props.nums}
         </button>
         {/* 回复，悬停显示 */}
         <button type="button" class="Button CommentItemV2-hoverBtn Button--plain">

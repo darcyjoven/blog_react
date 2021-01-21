@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-01-12 09:05:28
  * @LastEditors: Darcy
- * @LastEditTime: 2021-01-19 12:22:42
+ * @LastEditTime: 2021-01-21 12:08:02
  * @FilePath: /blog_react_js/src/demodata.js
  * @Descripti第一
  */
@@ -16,7 +16,7 @@ const article1 = {
     link: "1st",
     title: "这是我的第一篇文章!",
     description:
-"## 这是一个示范文章，不包含代码\
+        "## 这是一个示范文章，不包含代码\
 ## 这是一个标题\
 - 这是列表\
 - 列表2\
@@ -37,8 +37,8 @@ const article2 = {
     modidyTime: new Date(),
     link: "2st",
     title: "这是我的第二篇文章!",
-    description: 
-"## 这是一个示范文章，不包含代码\
+    description:
+        "## 这是一个示范文章，不包含代码\
 ## 这是一个标题\
 - 这是列表\
 - 列表2\
@@ -55,18 +55,19 @@ const article2 = {
     expanded: false,
 }
 export const StoreDemo = {
-    article: [article1,article2]
+    article: [article1, article2]
 }
 
 
 /**
  * 文章
  */
- 
+
 /**
  * 文章内容
  */
-const articleText=[{id:1,text:`### ssa 
+const articleText = [{
+    id: 1, text: `### ssa 
 ### as d
 - a
 - b
@@ -77,9 +78,9 @@ const articleText=[{id:1,text:`### ssa
 > asas
 > aasd
 ![](https://upload-images.jianshu.io/upload_images/20081468-2bfffb0d6729cb25.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/591/format/webp)`
-},{
-        id:2,
-        text:`### ssa 
+}, {
+    id: 2,
+    text: `### ssa 
 ### as d
 - a
 - b
@@ -91,97 +92,282 @@ const articleText=[{id:1,text:`### ssa
 > aasd
 
 ![](https://upload-images.jianshu.io/upload_images/20081468-2bfffb0d6729cb25.jpg)`
-    },
+},
 ]
+const commentRoom = [{
+    articleid: 1,
+    comments: [{
+        id: 1,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论1",
+        time: "2020/01/25",
+        like:10,
+        super: 0,
+        children: [{
+            id: 2,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论1",
+            time: "2020/01/25",
+            like:9,
+            super: 1,
+        }, {
+            id: 3,
+            email: "darc@g.com12",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论2",
+            time: "2020/01/25",
+            like:1,
+            super: 1,
+        }, {
+            id: 4,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论3",
+            time: "2020/01/25",
+            super: 1,
+        }, {
+            id: 5,
+            email: "darc@g.com4",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论4",
+            time: "2020/01/25",
+            super: 1,
+        }, {
+            id: 6,
+            email: "darc@g.com5",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论5",
+            time: "2020/01/25",
+            super: 1,
+        }
+        ]
+    },
+    {
+        id: 7,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论2",
+        time: "2020/01/25",
+        super: 0,
+        children: [{
+            id: 8,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论",
+            time: "2020/01/25",
+            super: 1,
+        }, {
+            id: 9,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论",
+            time: "2020/01/25",
+            super: 1,
+        }, {
+            id: 10,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论",
+            time: "2020/01/25",
+            super: 1,
+        }, {
+            id: 11,
+            email: "darc@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是2级评论",
+            time: "2020/01/25",
+            super: 1,
+        }
+        ]
+    },
+    {
+        id: 12,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论3",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 13,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论4",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 14,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论5",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 15,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论6",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 16,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论7",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 17,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论8",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 18,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论9",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    },
+    {
+        id: 19,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论10",
+        time: "2020/01/25",
+        super: 0,
+        children: []
+    }
+    ]
+}, {
+    articleid: 2,
+    comments: [
+        {
+            id: 1,
+            email: "wenzhang@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是一级评论1",
+            time: "2020/01/25",
+            super: 0,
+            children: []
+        },
+        {
+            id: 2,
+            email: "wenzhang@g.com",
+            head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+            text: "我是一级评论2",
+            time: "2020/01/25",
+            super: 0,
+            children: []
+        }
+    ]
+}]
+
 /**
  * 评论内容
  */
-const commentRoom=[{
-    articleid:1,
-    comments:[{
-        id:1,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我是一级评论",
-        time:"2020/01/25",
-        super:0,
-    },{
-        id:2,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是1级评论",
-        time:"2020/01/26",
-        super:0,
-    },{
-        id:3,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我是2级评论",
-        time:"2020/01/27",
-        super:2,
-    },{
-        id:4,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:2,
-    },{
-        id:10,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
-    },{
-        id:5,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
-    },{
-        id:6,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
-    },{
-        id:7,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
-    },{
-        id:8,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
-    },{
-        id:9,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我也是2级评论",
-        time:"2020/01/28",
-        super:0,
+const commentRoom2 = [{
+    articleid: 1,
+    comments: [{
+        id: 1,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是一级评论",
+        time: "2020/01/25",
+        super: 0,
+    }, {
+        id: 2,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是1级评论",
+        time: "2020/01/26",
+        super: 0,
+    }, {
+        id: 3,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是2级评论",
+        time: "2020/01/27",
+        super: 2,
+    }, {
+        id: 4,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 2,
+    }, {
+        id: 10,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
+    }, {
+        id: 5,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
+    }, {
+        id: 6,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
+    }, {
+        id: 7,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
+    }, {
+        id: 8,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
+    }, {
+        id: 9,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我也是2级评论",
+        time: "2020/01/28",
+        super: 0,
     },
     ],
-},{
-    articleid:2,
-    comments:[{
-        id:1,
-        email:"darc@g.com",
-        head:"https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
-        text:"我是唯一的二级评论",
-        time:"2020/01/25",
-        super:1,
+}, {
+    articleid: 2,
+    comments: [{
+        id: 1,
+        email: "darc@g.com",
+        head: "https://upload.jianshu.io/users/upload_avatars/20081468/225994ad-b062-47aa-ab0a-62645cf3554e.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+        text: "我是唯一的二级评论",
+        time: "2020/01/25",
+        super: 1,
     }
     ],
-} 
+}
 ]
 /**
  * 头部菜单
@@ -248,6 +434,6 @@ const articleOrder = [
     },
 ]
 
-export{
-    articleText,commentRoom,article2,headMenus,blogNmae,footerInfo,articleOrder
+export {
+    articleText, commentRoom, article2, headMenus, blogNmae, footerInfo, articleOrder
 }
