@@ -102,6 +102,9 @@ const ListMenu = props => (
         <ListRealAll id={props.id} />
     </div>
 )
+const abc   = "adas"
+console.log (abc)
+
 /**
  * 阅读全文按钮
  * @param {*} props 
